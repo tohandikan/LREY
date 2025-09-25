@@ -971,7 +971,7 @@
             data.timestamp = new Date().toLocaleString('id-ID');
             
             // Send to Google Sheets (you'll need to replace this URL with your actual Google Apps Script URL)
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzSW6hoXAIi8-BcHSHHxPedQjfFCxQmNkNaQ6XvzohMjCpSTwkajgLBGUlpxtzPNYyNpA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzvK47ZU4zXnnHDWHveqXY2eeaKmuLylrvy90FZ0J_bHl7qSmUlkYHqP-dULavC4ezLrg/exec';
             
             // For demo purposes, we'll just show success message
             // In real implementation, you would send data to Google Sheets
@@ -984,7 +984,7 @@
             e.target.reset();
             
             // In real implementation, uncomment this:
-            /*
+            
             fetch(scriptURL, {
                 method: 'POST',
                 body: formData
@@ -997,7 +997,7 @@
                 alert('Terjadi kesalahan. Silakan coba lagi.');
                 console.error('Error:', error);
             });
-            */
+            
         }
 
         // Animate counters
