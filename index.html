@@ -1,1047 +1,579 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoMax - Jual Beli Mobil Terpercaya</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            box-sizing: border-box;
-        }
-        
-        .hero-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-slide-in {
-            animation: slideIn 0.8s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .price-badge {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-        }
-        
-        .feature-icon {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-        }
-        
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-link:hover {
-            color: #667eea;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #667eea;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.3s ease;
-        }
-        
-        @keyframes modalSlideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 10px;
-        }
-        
-        .close:hover {
-            color: #000;
-        }
-        
-        .filter-btn {
-            transition: all 0.3s ease;
-        }
-        
-        .filter-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            transform: scale(1.05);
-        }
-        
-        .car-card {
-            opacity: 1;
-            transform: scale(1);
-            transition: all 0.5s ease;
-        }
-        
-        .car-card.hidden {
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-        }
-        
-        .testimonial-card {
-            background: linear-gradient(135deg, #f8f9ff, #e8eeff);
-        }
-        
-        .stats-counter {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <h1 class="text-2xl font-bold text-gray-800">🚗 AutoMax</h1>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Beranda</a>
-                        <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Tentang Kami</a>
-                        <a href="#cars" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Mobil</a>
-                        <a href="#services" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Layanan</a>
-                        <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Kontak</a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Survivor</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    
+    * {
+      font-family: 'Press Start 2P', monospace;
+      image-rendering: pixelated;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    #game-container {
+      width: 100%;
+      height: 100%;
+      background: #1a1a2e;
+    }
+    
+    canvas {
+      display: block;
+    }
+    
+    .pixel-border {
+      box-shadow: 
+        inset -4px -4px 0px 0px #1a1a2e,
+        inset 4px 4px 0px 0px #4a4a6a;
+    }
+    
+    .pixel-btn {
+      background: #4a9c5d;
+      box-shadow: 
+        inset -3px -3px 0px 0px #2d5e38,
+        inset 3px 3px 0px 0px #6bc97d;
+      transition: all 0.1s;
+    }
+    
+    .pixel-btn:hover {
+      background: #5db86e;
+    }
+    
+    .pixel-btn:active {
+      box-shadow: 
+        inset 3px 3px 0px 0px #2d5e38,
+        inset -3px -3px 0px 0px #6bc97d;
+    }
+    
+    .ability-card {
+      background: #2a2a4a;
+      border: 4px solid #4a4a6a;
+      transition: all 0.2s;
+    }
+    
+    .ability-card:hover {
+      background: #3a3a5a;
+      border-color: #6a6a8a;
+      transform: scale(1.05);
+    }
+    
+    .xp-bar {
+      background: linear-gradient(90deg, #ffd700 0%, #ffaa00 100%);
+      box-shadow: 0 0 10px #ffd700aa;
+    }
+    
+    .health-bar {
+      background: linear-gradient(90deg, #ff4444 0%, #cc2222 100%);
+      box-shadow: 0 0 8px #ff4444aa;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .float-anim {
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    .pulse-anim {
+      animation: pulse 1s ease-in-out infinite;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="game-container">
+   <canvas id="gameCanvas"></canvas><!-- UI Overlay -->
+   <div id="ui-overlay" class="absolute inset-0 pointer-events-none"><!-- Top Bar -->
+    <div class="absolute top-0 left-0 right-0 p-3 pointer-events-auto">
+     <div class="flex justify-between items-start gap-2"><!-- Left: Level & XP -->
+      <div class="flex flex-col gap-1">
+       <div class="bg-black/70 px-3 py-2 pixel-border"><span class="text-yellow-400 text-xs">LV <span id="level">1</span></span>
+       </div>
+       <div class="bg-black/50 w-32 h-3 pixel-border overflow-hidden">
+        <div id="xp-bar" class="xp-bar h-full transition-all duration-300" style="width: 0%"></div>
+       </div>
+      </div><!-- Center: Timer -->
+      <div class="bg-black/70 px-4 py-2 pixel-border"><span class="text-white text-xs" id="timer">00:00</span>
+      </div><!-- Right: Stats -->
+      <div class="flex flex-col gap-1 items-end">
+       <div class="bg-black/70 px-3 py-2 pixel-border flex items-center gap-2"><span class="text-red-400 text-xs">❤</span>
+        <div class="bg-black/50 w-20 h-2 overflow-hidden">
+         <div id="health-bar" class="health-bar h-full transition-all duration-200" style="width: 100%"></div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Beranda</a>
-                <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Tentang Kami</a>
-                <a href="#cars" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Mobil</a>
-                <a href="#services" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Layanan</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Kontak</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero-gradient pt-16 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-            <div class="text-center animate-fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                    Temukan Mobil Impian Anda
-                </h1>
-                <p class="text-xl text-white mb-8 max-w-3xl mx-auto">
-                    AutoMax adalah dealer mobil terpercaya dengan pengalaman lebih dari 15 tahun. 
-                    Kami menyediakan berbagai pilihan mobil berkualitas dengan harga terbaik.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button onclick="scrollToSection('cars')" class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300">
-                        Lihat Koleksi Mobil
-                    </button>
-                    <button onclick="scrollToSection('about')" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition duration-300">
-                        Tentang Kami
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="bg-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="animate-fade-in">
-                    <div class="stats-counter" data-target="500">0</div>
-                    <p class="text-gray-600 font-medium">Mobil Terjual</p>
-                </div>
-                <div class="animate-fade-in">
-                    <div class="stats-counter" data-target="15">0</div>
-                    <p class="text-gray-600 font-medium">Tahun Pengalaman</p>
-                </div>
-                <div class="animate-fade-in">
-                    <div class="stats-counter" data-target="98">0</div>
-                    <p class="text-gray-600 font-medium">% Kepuasan Pelanggan</p>
-                </div>
-                <div class="animate-fade-in">
-                    <div class="stats-counter" data-target="50">0</div>
-                    <p class="text-gray-600 font-medium">Varian Mobil</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="bg-gray-100 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Tentang AutoMax</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Sejak 2008, AutoMax telah menjadi pilihan utama untuk jual beli mobil berkualitas di Indonesia
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="animate-slide-in">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Mengapa Memilih AutoMax?</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <span class="text-white text-xl">✓</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2">Kualitas Terjamin</h4>
-                                <p class="text-gray-600">Setiap mobil telah melalui inspeksi menyeluruh oleh teknisi berpengalaman</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <span class="text-white text-xl">💰</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2">Harga Kompetitif</h4>
-                                <p class="text-gray-600">Kami menawarkan harga terbaik di pasaran dengan sistem kredit yang fleksibel</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <span class="text-white text-xl">🛡️</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2">Garansi Resmi</h4>
-                                <p class="text-gray-600">Semua mobil dilengkapi dengan garansi dan layanan purna jual terbaik</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <span class="text-white text-xl">👥</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2">Tim Profesional</h4>
-                                <p class="text-gray-600">Didukung oleh tim sales dan teknisi yang berpengalaman dan terpercaya</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="animate-fade-in">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Visi & Misi Kami</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <h4 class="font-semibold text-blue-600 mb-2">🎯 Visi</h4>
-                                <p class="text-gray-600">Menjadi dealer mobil terdepan yang memberikan solusi transportasi terbaik untuk setiap keluarga Indonesia</p>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-blue-600 mb-2">🚀 Misi</h4>
-                                <ul class="text-gray-600 space-y-2">
-                                    <li>• Menyediakan mobil berkualitas dengan harga terjangkau</li>
-                                    <li>• Memberikan pelayanan terbaik kepada setiap pelanggan</li>
-                                    <li>• Membangun kepercayaan melalui transparansi dan integritas</li>
-                                    <li>• Terus berinovasi dalam layanan dan teknologi</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cars Section -->
-    <section id="cars" class="bg-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Koleksi Mobil Kami</h2>
-                <p class="text-xl text-gray-600 mb-8">Pilihan mobil berkualitas untuk setiap kebutuhan dan budget Anda</p>
-                
-                <!-- Filter Buttons -->
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <button class="filter-btn active px-6 py-2 rounded-full border-2 border-blue-600 text-blue-600 font-medium" data-filter="all">
-                        Semua
-                    </button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium" data-filter="sedan">
-                        Sedan
-                    </button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium" data-filter="suv">
-                        SUV
-                    </button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium" data-filter="hatchback">
-                        Hatchback
-                    </button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium" data-filter="mpv">
-                        MPV
-                    </button>
-                </div>
-            </div>
-            
-            <div id="cars-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Car cards will be generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="bg-gray-100 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Layanan Kami</h2>
-                <p class="text-xl text-gray-600">Layanan lengkap untuk semua kebutuhan otomotif Anda</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">🚗</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Jual Beli Mobil</h3>
-                    <p class="text-gray-600 text-center">Kami melayani jual beli mobil bekas dan baru dengan proses yang mudah dan transparan</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">💳</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Kredit Mobil</h3>
-                    <p class="text-gray-600 text-center">Solusi kredit dengan bunga kompetitif dan proses persetujuan yang cepat</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">🔧</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Service & Maintenance</h3>
-                    <p class="text-gray-600 text-center">Layanan perawatan dan perbaikan mobil oleh teknisi berpengalaman</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">📋</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Inspeksi Kendaraan</h3>
-                    <p class="text-gray-600 text-center">Pemeriksaan menyeluruh kondisi kendaraan sebelum transaksi</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">📄</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Bantuan Dokumen</h3>
-                    <p class="text-gray-600 text-center">Kami membantu proses pengurusan STNK, BPKB, dan dokumen lainnya</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover animate-fade-in">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-white text-2xl">🚚</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Antar Jemput</h3>
-                    <p class="text-gray-600 text-center">Layanan antar jemput kendaraan untuk kemudahan pelanggan</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="bg-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Testimoni Pelanggan</h2>
-                <p class="text-xl text-gray-600">Apa kata pelanggan tentang layanan AutoMax</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-8 rounded-2xl shadow-lg animate-fade-in">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                            A
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Ahmad Rizki</h4>
-                            <p class="text-gray-600 text-sm">Jakarta</p>
-                        </div>
-                    </div>
-                    <div class="flex mb-4">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600">"Pelayanan sangat memuaskan! Proses kredit cepat dan mobil sesuai dengan yang dijanjikan. Terima kasih AutoMax!"</p>
-                </div>
-                
-                <div class="testimonial-card p-8 rounded-2xl shadow-lg animate-fade-in">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                            S
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Sari Indah</h4>
-                            <p class="text-gray-600 text-sm">Bandung</p>
-                        </div>
-                    </div>
-                    <div class="flex mb-4">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600">"Tim sales sangat profesional dan membantu. Mobil impian saya akhirnya terwujud dengan harga yang terjangkau."</p>
-                </div>
-                
-                <div class="testimonial-card p-8 rounded-2xl shadow-lg animate-fade-in">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                            B
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Budi Santoso</h4>
-                            <p class="text-gray-600 text-sm">Surabaya</p>
-                        </div>
-                    </div>
-                    <div class="flex mb-4">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600">"Sudah 3 kali beli mobil di AutoMax. Selalu puas dengan kualitas dan layanannya. Highly recommended!"</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="hero-gradient py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in">
-                <h2 class="text-4xl font-bold text-white mb-4">Hubungi Kami</h2>
-                <p class="text-xl text-white">Siap membantu Anda menemukan mobil impian</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="animate-slide-in">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Informasi Kontak</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                                    <span class="text-white">📍</span>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Alamat</p>
-                                    <p class="text-gray-600">Jl. Pettarani No. 123, Makassar Pusat 10220</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                                    <span class="text-white">📞</span>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Telepon</p>
-                                    <p class="text-gray-600">+62 21 1234 5678</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                                    <span class="text-white">📱</span>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">WhatsApp</p>
-                                    <p class="text-gray-600">+62 812 3456 7890</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                                    <span class="text-white">✉️</span>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Email</p>
-                                    <p class="text-gray-600">info@automax.co.id</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                                    <span class="text-white">🕒</span>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Jam Operasional</p>
-                                    <p class="text-gray-600">Senin - Sabtu: 08:00 - 18:00</p>
-                                    <p class="text-gray-600">Minggu: 09:00 - 16:00</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="animate-fade-in">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h3>
-                        <form id="contact-form" class="space-y-4">
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
-                                <input type="text" name="nama" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Email</label>
-                                <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">No. Telepon</label>
-                                <input type="tel" name="telepon" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Jenis Mobil yang Diminati</label>
-                                <select name="jenis_mobil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="">Pilih Jenis Mobil</option>
-                                    <option value="Sedan">Sedan</option>
-                                    <option value="SUV">SUV</option>
-                                    <option value="Hatchback">Hatchback</option>
-                                    <option value="MPV">MPV</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Budget</label>
-                                <select name="budget" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="">Pilih Range Budget</option>
-                                    <option value="< 100 juta">< 100 juta</option>
-                                    <option value="100-200 juta">100-200 juta</option>
-                                    <option value="200-300 juta">200-300 juta</option>
-                                    <option value="300-500 juta">300-500 juta</option>
-                                    <option value="> 500 juta">> 500 juta</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Pesan</label>
-                                <textarea name="pesan" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Ceritakan kebutuhan mobil Anda..."></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                                Kirim Pesan
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">🚗 AutoMax</h3>
-                    <p class="text-gray-300 mb-4">Dealer mobil terpercaya dengan pengalaman lebih dari 15 tahun melayani kebutuhan transportasi keluarga Indonesia.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-white">📘</a>
-                        <a href="#" class="text-gray-300 hover:text-white">📷</a>
-                        <a href="#" class="text-gray-300 hover:text-white">🐦</a>
-                        <a href="#" class="text-gray-300 hover:text-white">💼</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Layanan</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="#" class="hover:text-white">Jual Beli Mobil</a></li>
-                        <li><a href="#" class="hover:text-white">Kredit Mobil</a></li>
-                        <li><a href="#" class="hover:text-white">Service & Maintenance</a></li>
-                        <li><a href="#" class="hover:text-white">Inspeksi Kendaraan</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Kategori Mobil</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="#" class="hover:text-white">Sedan</a></li>
-                        <li><a href="#" class="hover:text-white">SUV</a></li>
-                        <li><a href="#" class="hover:text-white">Hatchback</a></li>
-                        <li><a href="#" class="hover:text-white">MPV</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>📍 Jl. Pettarani No. 123, Makassar</li>
-                        <li>📞 +62 21 1234 5657</li>
-                        <li>📱 +62 856 5670 0619</li>
-                        <li>✉️ info@automax.co.id</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-                <p>&copy; 2024 AutoMax. Semua hak cipta dilindungi.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Car Detail Modal -->
-    <div id="car-modal" class="modal">
-        <div class="modal-content">
-            <div class="p-6">
-                <span class="close">&times;</span>
-                <div id="modal-content">
-                    <!-- Modal content will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
+       </div>
+       <div class="bg-black/70 px-3 py-1 pixel-border"><span class="text-green-400 text-xs">☠ <span id="kills">0</span></span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Active Abilities Display -->
+    <div id="abilities-display" class="absolute top-20 left-3 flex flex-wrap gap-1 max-w-24 pointer-events-auto">
+    </div><!-- Joystick Area -->
+    <div id="joystick-container" class="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-auto">
+     <div id="joystick-base" class="w-28 h-28 rounded-full bg-black/40 border-4 border-white/30 relative flex items-center justify-center">
+      <div id="joystick-stick" class="w-12 h-12 rounded-full bg-white/60 border-2 border-white/80 absolute transition-none cursor-pointer"></div>
+     </div>
+    </div><!-- Pause Button -->
+    <div class="absolute bottom-8 right-4 pointer-events-auto"><button id="pause-btn" class="pixel-btn px-3 py-2 text-white text-xs">⏸</button>
     </div>
-
-    <!-- Success Message Modal -->
-    <div id="success-modal" class="modal">
-        <div class="modal-content">
-            <div class="p-8 text-center">
-                <span class="close">&times;</span>
-                <div class="text-6xl mb-4">✅</div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Pesan Terkirim!</h3>
-                <p class="text-gray-600 mb-6">Terima kasih atas minat Anda. Tim kami akan segera menghubungi Anda dalam 1x24 jam.</p>
-                <button onclick="closeModal('success-modal')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                    Tutup
-                </button>
-            </div>
-        </div>
+   </div><!-- Start Screen -->
+   <div id="start-screen" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center gap-6 z-50">
+    <div class="float-anim">
+     <h1 id="game-title" class="text-2xl md:text-4xl text-yellow-400 text-center px-4">PIXEL SURVIVOR</h1>
     </div>
+    <div class="text-center">
+     <p class="text-gray-400 text-xs mb-2">Survive the endless horde!</p>
+     <p class="text-gray-500 text-xs">Use joystick to move</p>
+    </div><button id="start-btn" class="pixel-btn px-8 py-4 text-white text-sm pulse-anim"> START GAME </button>
+   </div><!-- Level Up Screen -->
+   <div id="levelup-screen" class="absolute inset-0 bg-black/85 flex flex-col items-center justify-center gap-4 z-40 hidden">
+    <h2 class="text-xl text-yellow-400 mb-2">LEVEL UP!</h2>
+    <p class="text-gray-300 text-xs mb-4">Choose an ability:</p>
+    <div id="ability-choices" class="flex flex-wrap justify-center gap-3 px-4 max-w-lg">
+    </div>
+   </div><!-- Game Over Screen -->
+   <div id="gameover-screen" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center gap-4 z-50 hidden">
+    <h2 class="text-2xl text-red-500 mb-2">GAME OVER</h2>
+    <div class="bg-black/50 p-4 pixel-border text-center">
+     <p class="text-white text-xs mb-2">Survived: <span id="final-time" class="text-yellow-400">00:00</span></p>
+     <p class="text-white text-xs mb-2">Level: <span id="final-level" class="text-green-400">1</span></p>
+     <p class="text-white text-xs">Kills: <span id="final-kills" class="text-red-400">0</span></p>
+    </div><button id="restart-btn" class="pixel-btn px-6 py-3 text-white text-xs mt-4"> PLAY AGAIN </button>
+   </div><!-- Pause Screen -->
+   <div id="pause-screen" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center gap-4 z-40 hidden">
+    <h2 class="text-xl text-white">PAUSED</h2><button id="resume-btn" class="pixel-btn px-6 py-3 text-white text-xs"> RESUME </button>
+   </div>
+  </div>
+  <script>
+    // SDK Initialization
+    const defaultConfig = {
+      game_title: 'PIXEL SURVIVOR',
+      primary_color: '#1a1a2e',
+      accent_color: '#ffd700',
+      text_color: '#ffffff'
+    };
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = config.game_title || defaultConfig.game_title;
+          document.getElementById('game-title').textContent = title;
+          document.title = title;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['game_title', config.game_title || defaultConfig.game_title]
+        ])
+      });
+    }
 
-    <script>
-        // Car data
-        const cars = [
-            {
-                id: 1,
-                name: "Toyota Avanza 1.3 G",
-                category: "mpv",
-                price: "Rp 185.000.000",
-                year: "2022",
-                km: "15.000",
-                transmission: "Manual",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='50' y='80' width='300' height='120' rx='15' fill='%23e74c3c'/%3E%3Crect x='70' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Crect x='250' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Ccircle cx='100' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='300' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='100' cy='220' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='300' cy='220' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EAvanza%3C/text%3E%3C/svg%3E",
-                features: ["AC", "Power Steering", "Central Lock", "Electric Mirror"],
-                description: "MPV keluarga yang nyaman dan irit bahan bakar. Cocok untuk keluarga kecil dengan mobilitas tinggi."
-            },
-            {
-                id: 2,
-                name: "Honda Civic 1.5 Turbo",
-                category: "sedan",
-                price: "Rp 485.000.000",
-                year: "2021",
-                km: "25.000",
-                transmission: "CVT",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='50' y='90' width='300' height='100' rx='10' fill='%232c3e50'/%3E%3Crect x='70' y='110' width='70' height='50' rx='5' fill='%233498db'/%3E%3Crect x='260' y='110' width='70' height='50' rx='5' fill='%233498db'/%3E%3Ccircle cx='110' cy='210' r='25' fill='%232c3e50'/%3E%3Ccircle cx='290' cy='210' r='25' fill='%232c3e50'/%3E%3Ccircle cx='110' cy='210' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='290' cy='210' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3ECivic%3C/text%3E%3C/svg%3E",
-                features: ["Turbo Engine", "Leather Seats", "Sunroof", "Honda Sensing"],
-                description: "Sedan sporty dengan performa mesin turbo yang bertenaga. Dilengkapi teknologi Honda Sensing untuk keamanan maksimal."
-            },
-            {
-                id: 3,
-                name: "Mitsubishi Xpander Cross",
-                category: "suv",
-                price: "Rp 285.000.000",
-                year: "2023",
-                km: "8.000",
-                transmission: "CVT",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='40' y='70' width='320' height='130' rx='15' fill='%23e67e22'/%3E%3Crect x='60' y='90' width='80' height='70' rx='5' fill='%233498db'/%3E%3Crect x='260' y='90' width='80' height='70' rx='5' fill='%233498db'/%3E%3Ccircle cx='100' cy='220' r='28' fill='%232c3e50'/%3E%3Ccircle cx='300' cy='220' r='28' fill='%232c3e50'/%3E%3Ccircle cx='100' cy='220' r='18' fill='%2395a5a6'/%3E%3Ccircle cx='300' cy='220' r='18' fill='%2395a5a6'/%3E%3Ctext x='200' y='135' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EXpander Cross%3C/text%3E%3C/svg%3E",
-                features: ["Ground Clearance Tinggi", "7 Seater", "Paddle Shift", "Hill Start Assist"],
-                description: "SUV kompak dengan ground clearance tinggi. Ideal untuk perjalanan dalam kota maupun luar kota dengan kapasitas 7 penumpang."
-            },
-            {
-                id: 4,
-                name: "Toyota Yaris 1.5 G",
-                category: "hatchback",
-                price: "Rp 235.000.000",
-                year: "2022",
-                km: "12.000",
-                transmission: "CVT",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='60' y='85' width='280' height='110' rx='12' fill='%239b59b6'/%3E%3Crect x='80' y='105' width='70' height='55' rx='5' fill='%233498db'/%3E%3Crect x='250' y='105' width='70' height='55' rx='5' fill='%233498db'/%3E%3Ccircle cx='120' cy='215' r='25' fill='%232c3e50'/%3E%3Ccircle cx='280' cy='215' r='25' fill='%232c3e50'/%3E%3Ccircle cx='120' cy='215' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='280' cy='215' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EYaris%3C/text%3E%3C/svg%3E",
-                features: ["Toyota Safety Sense", "Wireless Charger", "LED Headlights", "Smart Entry"],
-                description: "Hatchback modern dengan teknologi terdepan. Cocok untuk anak muda yang aktif dengan gaya hidup urban."
-            },
-            {
-                id: 5,
-                name: "Suzuki Ertiga GL",
-                category: "mpv",
-                price: "Rp 195.000.000",
-                year: "2021",
-                km: "35.000",
-                transmission: "Manual",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='50' y='80' width='300' height='120' rx='15' fill='%2327ae60'/%3E%3Crect x='70' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Crect x='250' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Ccircle cx='100' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='300' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='100' cy='220' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='300' cy='220' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EErtiga%3C/text%3E%3C/svg%3E",
-                features: ["7 Seater", "AC Double Blower", "Power Steering", "Central Lock"],
-                description: "MPV keluarga yang ekonomis dan praktis. Pilihan tepat untuk keluarga besar dengan budget terbatas."
-            },
-            {
-                id: 6,
-                name: "BMW 320i Sport",
-                category: "sedan",
-                price: "Rp 685.000.000",
-                year: "2020",
-                km: "45.000",
-                transmission: "Automatic",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='50' y='90' width='300' height='100' rx='10' fill='%2334495e'/%3E%3Crect x='70' y='110' width='70' height='50' rx='5' fill='%233498db'/%3E%3Crect x='260' y='110' width='70' height='50' rx='5' fill='%233498db'/%3E%3Ccircle cx='110' cy='210' r='25' fill='%232c3e50'/%3E%3Ccircle cx='290' cy='210' r='25' fill='%232c3e50'/%3E%3Ccircle cx='110' cy='210' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='290' cy='210' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EBMW 320i%3C/text%3E%3C/svg%3E",
-                features: ["BMW iDrive", "Leather Interior", "Sport Suspension", "Premium Audio"],
-                description: "Sedan mewah dengan performa tinggi. Memberikan pengalaman berkendara yang premium dan sporty."
-            },
-            {
-                id: 7,
-                name: "Toyota Fortuner VRZ",
-                category: "suv",
-                price: "Rp 485.000.000",
-                year: "2021",
-                km: "28.000",
-                transmission: "Automatic",
-                fuel: "Solar",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='40' y='65' width='320' height='135' rx='15' fill='%23c0392b'/%3E%3Crect x='60' y='85' width='80' height='75' rx='5' fill='%233498db'/%3E%3Crect x='260' y='85' width='80' height='75' rx='5' fill='%233498db'/%3E%3Ccircle cx='100' cy='220' r='30' fill='%232c3e50'/%3E%3Ccircle cx='300' cy='220' r='30' fill='%232c3e50'/%3E%3Ccircle cx='100' cy='220' r='20' fill='%2395a5a6'/%3E%3Ccircle cx='300' cy='220' r='20' fill='%2395a5a6'/%3E%3Ctext x='200' y='130' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EFortuner%3C/text%3E%3C/svg%3E",
-                features: ["4WD", "7 Seater", "Diesel Engine", "Hill Start Assist"],
-                description: "SUV tangguh untuk segala medan. Cocok untuk petualangan dan perjalanan jarak jauh dengan keluarga."
-            },
-            {
-                id: 8,
-                name: "Honda Jazz RS",
-                category: "hatchback",
-                price: "Rp 265.000.000",
-                year: "2022",
-                km: "18.000",
-                transmission: "CVT",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='60' y='85' width='280' height='110' rx='12' fill='%23f39c12'/%3E%3Crect x='80' y='105' width='70' height='55' rx='5' fill='%233498db'/%3E%3Crect x='250' y='105' width='70' height='55' rx='5' fill='%233498db'/%3E%3Ccircle cx='120' cy='215' r='25' fill='%232c3e50'/%3E%3Ccircle cx='280' cy='215' r='25' fill='%232c3e50'/%3E%3Ccircle cx='120' cy='215' r='15' fill='%23e74c3c'/%3E%3Ccircle cx='280' cy='215' r='15' fill='%23e74c3c'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EJazz RS%3C/text%3E%3C/svg%3E",
-                features: ["Honda Sensing", "RS Bodykit", "Paddle Shift", "Premium Audio"],
-                description: "Hatchback sporty dengan desain yang eye-catching. Performa mesin yang responsif untuk berkendara yang menyenangkan."
-            },
-            {
-                id: 9,
-                name: "Daihatsu Xenia R",
-                category: "mpv",
-                price: "Rp 175.000.000",
-                year: "2021",
-                km: "32.000",
-                transmission: "Manual",
-                fuel: "Bensin",
-                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f0f0f0'/%3E%3Crect x='50' y='80' width='300' height='120' rx='15' fill='%238e44ad'/%3E%3Crect x='70' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Crect x='250' y='100' width='80' height='60' rx='5' fill='%233498db'/%3E%3Ccircle cx='100' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='300' cy='220' r='25' fill='%232c3e50'/%3E%3Ccircle cx='100' cy='220' r='15' fill='%2395a5a6'/%3E%3Ccircle cx='300' cy='220' r='15' fill='%2395a5a6'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EXenia%3C/text%3E%3C/svg%3E",
-                features: ["7 Seater", "AC", "Power Steering", "Electric Mirror"],
-                description: "MPV entry level yang terjangkau. Solusi transportasi keluarga dengan harga yang bersahabat."
-            }
-        ];
+    // Game Constants
+    const ABILITIES = [
+      { id: 'fireball', name: 'Fireball', desc: 'Shoots fireballs', icon: '🔥', color: '#ff6600', maxLevel: 5 },
+      { id: 'lightning', name: 'Lightning', desc: 'Chain lightning', icon: '⚡', color: '#ffff00', maxLevel: 5 },
+      { id: 'ice_shard', name: 'Ice Shard', desc: 'Freezing projectiles', icon: '❄️', color: '#00ccff', maxLevel: 5 },
+      { id: 'poison_cloud', name: 'Poison Cloud', desc: 'Toxic area damage', icon: '☠️', color: '#00ff00', maxLevel: 5 },
+      { id: 'holy_aura', name: 'Holy Aura', desc: 'Damages nearby enemies', icon: '✨', color: '#ffffaa', maxLevel: 5 },
+      { id: 'shadow_blade', name: 'Shadow Blade', desc: 'Spinning blades', icon: '🗡️', color: '#8844aa', maxLevel: 5 },
+      { id: 'meteor', name: 'Meteor', desc: 'Falling meteors', icon: '☄️', color: '#ff4400', maxLevel: 5 },
+      { id: 'arcane_orb', name: 'Arcane Orb', desc: 'Homing orbs', icon: '🔮', color: '#aa44ff', maxLevel: 5 },
+      { id: 'earthquake', name: 'Earthquake', desc: 'Ground shockwave', icon: '🌋', color: '#884422', maxLevel: 5 },
+      { id: 'wind_slash', name: 'Wind Slash', desc: 'Fast wind cuts', icon: '💨', color: '#aaffaa', maxLevel: 5 },
+      { id: 'blood_drain', name: 'Blood Drain', desc: 'Lifesteal attack', icon: '🩸', color: '#cc0000', maxLevel: 5 },
+      { id: 'spirit_wolf', name: 'Spirit Wolf', desc: 'Summon wolves', icon: '🐺', color: '#6688cc', maxLevel: 5 },
+      { id: 'thunder_strike', name: 'Thunder', desc: 'Random strikes', icon: '🌩️', color: '#ffcc00', maxLevel: 5 },
+      { id: 'frost_nova', name: 'Frost Nova', desc: 'Freezing explosion', icon: '💠', color: '#88ddff', maxLevel: 5 },
+      { id: 'flame_ring', name: 'Flame Ring', desc: 'Ring of fire', icon: '🔆', color: '#ff8800', maxLevel: 5 },
+      { id: 'void_beam', name: 'Void Beam', desc: 'Piercing beam', icon: '🌑', color: '#440066', maxLevel: 5 },
+      { id: 'health_regen', name: 'Regeneration', desc: '+HP regen', icon: '💚', color: '#44ff44', maxLevel: 5 },
+      { id: 'speed_boost', name: 'Swift Feet', desc: '+Move speed', icon: '👟', color: '#44aaff', maxLevel: 5 },
+      { id: 'armor', name: 'Armor', desc: '+Defense', icon: '🛡️', color: '#888888', maxLevel: 5 },
+      { id: 'crit_chance', name: 'Critical', desc: '+Crit chance', icon: '💥', color: '#ff4444', maxLevel: 5 },
+      { id: 'magnet', name: 'Magnet', desc: '+Pickup range', icon: '🧲', color: '#ff44ff', maxLevel: 5 },
+      { id: 'luck', name: 'Lucky', desc: '+XP gain', icon: '🍀', color: '#44ff88', maxLevel: 5 }
+    ];
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            renderCars('all');
-            initializeEventListeners();
-            animateCounters();
+    // Game State
+    let canvas, ctx;
+    let gameState = 'menu';
+    let gameTime = 0;
+    let lastTime = 0;
+    let deltaTime = 0;
+    
+    const camera = { x: 0, y: 0 };
+    
+    const player = {
+      x: 0, y: 0,
+      vx: 0, vy: 0,
+      speed: 120,
+      health: 100,
+      maxHealth: 100,
+      xp: 0,
+      xpToLevel: 10,
+      level: 1,
+      kills: 0,
+      abilities: {},
+      armor: 0,
+      critChance: 0.05,
+      xpMultiplier: 1,
+      pickupRange: 50,
+      regenRate: 0
+    };
+    
+    let enemies = [];
+    let projectiles = [];
+    let particles = [];
+    let xpOrbs = [];
+    let damageNumbers = [];
+    
+    // Joystick
+    const joystick = {
+      active: false,
+      baseX: 0, baseY: 0,
+      stickX: 0, stickY: 0,
+      dx: 0, dy: 0
+    };
+    
+    // Ground tiles for infinite world effect
+    const groundTiles = [];
+    const TILE_SIZE = 64;
+    const GROUND_COLORS = ['#1a2a1a', '#1e2e1e', '#162616', '#1a2618'];
+    
+    // Initialize
+    function init() {
+      canvas = document.getElementById('gameCanvas');
+      ctx = canvas.getContext('2d');
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      setupJoystick();
+      setupButtons();
+      
+      generateGroundTiles();
+      
+      requestAnimationFrame(gameLoop);
+    }
+    
+    function resizeCanvas() {
+      const container = document.getElementById('game-container');
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+    }
+    
+    function setupJoystick() {
+      const base = document.getElementById('joystick-base');
+      const stick = document.getElementById('joystick-stick');
+      
+      const handleStart = (e) => {
+        e.preventDefault();
+        joystick.active = true;
+        const rect = base.getBoundingClientRect();
+        joystick.baseX = rect.left + rect.width / 2;
+        joystick.baseY = rect.top + rect.height / 2;
+        handleMove(e);
+      };
+      
+      const handleMove = (e) => {
+        if (!joystick.active) return;
+        e.preventDefault();
+        
+        const touch = e.touches ? e.touches[0] : e;
+        const dx = touch.clientX - joystick.baseX;
+        const dy = touch.clientY - joystick.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 40;
+        
+        if (dist > maxDist) {
+          joystick.dx = (dx / dist) * maxDist;
+          joystick.dy = (dy / dist) * maxDist;
+        } else {
+          joystick.dx = dx;
+          joystick.dy = dy;
+        }
+        
+        stick.style.transform = `translate(${joystick.dx}px, ${joystick.dy}px)`;
+        
+        // Normalize for movement
+        if (dist > 5) {
+          joystick.stickX = dx / Math.max(dist, maxDist);
+          joystick.stickY = dy / Math.max(dist, maxDist);
+        } else {
+          joystick.stickX = 0;
+          joystick.stickY = 0;
+        }
+      };
+      
+      const handleEnd = (e) => {
+        joystick.active = false;
+        joystick.stickX = 0;
+        joystick.stickY = 0;
+        joystick.dx = 0;
+        joystick.dy = 0;
+        stick.style.transform = 'translate(0, 0)';
+      };
+      
+      base.addEventListener('touchstart', handleStart, { passive: false });
+      base.addEventListener('touchmove', handleMove, { passive: false });
+      base.addEventListener('touchend', handleEnd);
+      base.addEventListener('touchcancel', handleEnd);
+      
+      base.addEventListener('mousedown', handleStart);
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleEnd);
+      
+      // Keyboard support
+      const keys = {};
+      window.addEventListener('keydown', (e) => {
+        keys[e.key.toLowerCase()] = true;
+        updateKeyboardJoystick();
+      });
+      window.addEventListener('keyup', (e) => {
+        keys[e.key.toLowerCase()] = false;
+        updateKeyboardJoystick();
+      });
+      
+      function updateKeyboardJoystick() {
+        let kx = 0, ky = 0;
+        if (keys['w'] || keys['arrowup']) ky = -1;
+        if (keys['s'] || keys['arrowdown']) ky = 1;
+        if (keys['a'] || keys['arrowleft']) kx = -1;
+        if (keys['d'] || keys['arrowright']) kx = 1;
+        
+        if (kx !== 0 || ky !== 0) {
+          const len = Math.sqrt(kx * kx + ky * ky);
+          joystick.stickX = kx / len;
+          joystick.stickY = ky / len;
+        } else if (!joystick.active) {
+          joystick.stickX = 0;
+          joystick.stickY = 0;
+        }
+      }
+    }
+    
+    function setupButtons() {
+      document.getElementById('start-btn').onclick = startGame;
+      document.getElementById('restart-btn').onclick = startGame;
+      document.getElementById('pause-btn').onclick = togglePause;
+      document.getElementById('resume-btn').onclick = togglePause;
+    }
+    
+    function generateGroundTiles() {
+      groundTiles.length = 0;
+      for (let i = 0; i < 200; i++) {
+        groundTiles.push({
+          x: (Math.random() - 0.5) * 4000,
+          y: (Math.random() - 0.5) * 4000,
+          size: 8 + Math.random() * 16,
+          color: GROUND_COLORS[Math.floor(Math.random() * GROUND_COLORS.length)],
+          type: Math.random() > 0.7 ? 'rock' : 'grass'
         });
-
-        // Render cars based on filter
-        function renderCars(filter) {
-            const carsGrid = document.getElementById('cars-grid');
-            const filteredCars = filter === 'all' ? cars : cars.filter(car => car.category === filter);
-            
-            carsGrid.innerHTML = filteredCars.map(car => `
-                <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" data-category="${car.category}">
-                    <div class="relative">
-                        <img src="${car.image}" alt="${car.name}" class="w-full h-48 object-cover">
-                        <div class="price-badge absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            ${car.price}
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">${car.name}</h3>
-                        <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
-                            <div class="flex items-center">
-                                <span class="mr-2">📅</span>
-                                <span>${car.year}</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">🛣️</span>
-                                <span>${car.km} km</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">⚙️</span>
-                                <span>${car.transmission}</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">⛽</span>
-                                <span>${car.fuel}</span>
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-4">
-                            ${car.features.slice(0, 2).map(feature => `
-                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs">${feature}</span>
-                            `).join('')}
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="showCarDetails(${car.id})" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                                Lihat Detail
-                            </button>
-                            <button onclick="contactForCar('${car.name}')" class="flex-1 border-2 border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-300">
-                                Hubungi Kami
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+      }
+    }
+    
+    function startGame() {
+      gameState = 'playing';
+      gameTime = 0;
+      
+      player.x = 0;
+      player.y = 0;
+      player.health = 100;
+      player.maxHealth = 100;
+      player.xp = 0;
+      player.xpToLevel = 10;
+      player.level = 1;
+      player.kills = 0;
+      player.abilities = {};
+      player.speed = 120;
+      player.armor = 0;
+      player.critChance = 0.05;
+      player.xpMultiplier = 1;
+      player.pickupRange = 50;
+      player.regenRate = 0;
+      
+      enemies = [];
+      projectiles = [];
+      particles = [];
+      xpOrbs = [];
+      damageNumbers = [];
+      
+      // Give starter ability
+      const starterAbility = ABILITIES[0]; // Fireball
+      player.abilities[starterAbility.id] = 1;
+      
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('gameover-screen').classList.add('hidden');
+      document.getElementById('levelup-screen').classList.add('hidden');
+      
+      updateUI();
+      updateAbilitiesDisplay();
+    }
+    
+    function togglePause() {
+      if (gameState === 'playing') {
+        gameState = 'paused';
+        document.getElementById('pause-screen').classList.remove('hidden');
+      } else if (gameState === 'paused') {
+        gameState = 'playing';
+        document.getElementById('pause-screen').classList.add('hidden');
+      }
+    }
+    
+    function gameOver() {
+      gameState = 'gameover';
+      document.getElementById('final-time').textContent = formatTime(gameTime);
+      document.getElementById('final-level').textContent = player.level;
+      document.getElementById('final-kills').textContent = player.kills;
+      document.getElementById('gameover-screen').classList.remove('hidden');
+    }
+    
+    function gameLoop(timestamp) {
+      deltaTime = Math.min((timestamp - lastTime) / 1000, 0.1);
+      lastTime = timestamp;
+      
+      if (gameState === 'playing') {
+        gameTime += deltaTime;
+        update(deltaTime);
+      }
+      
+      render();
+      requestAnimationFrame(gameLoop);
+    }
+    
+    function update(dt) {
+      // Player movement
+      player.vx = joystick.stickX * player.speed;
+      player.vy = joystick.stickY * player.speed;
+      player.x += player.vx * dt;
+      player.y += player.vy * dt;
+      
+      // Health regen
+      if (player.regenRate > 0) {
+        player.health = Math.min(player.maxHealth, player.health + player.regenRate * dt);
+      }
+      
+      // Camera follow
+      camera.x = player.x - canvas.width / 2;
+      camera.y = player.y - canvas.height / 2;
+      
+      // Spawn enemies
+      spawnEnemies(dt);
+      
+      // Update enemies
+      updateEnemies(dt);
+      
+      // Update abilities
+      updateAbilities(dt);
+      
+      // Update projectiles
+      updateProjectiles(dt);
+      
+      // Update particles
+      updateParticles(dt);
+      
+      // Update XP orbs
+      updateXPOrbs(dt);
+      
+      // Update damage numbers
+      updateDamageNumbers(dt);
+      
+      // Check collisions
+      checkCollisions();
+      
+      // Update UI
+      updateUI();
+    }
+    
+    let spawnTimer = 0;
+    function spawnEnemies(dt) {
+      const spawnRate = Math.max(0.3, 2 - gameTime / 60);
+      spawnTimer += dt;
+      
+      if (spawnTimer >= spawnRate) {
+        spawnTimer = 0;
+        
+        const count = Math.min(5, 1 + Math.floor(gameTime / 30));
+        for (let i = 0; i < count; i++) {
+          spawnEnemy();
         }
-
-        // Filter functionality
-        function initializeEventListeners() {
-            // Filter buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    renderCars(this.dataset.filter);
-                });
-            });
-
-            // Mobile menu toggle
-            document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Contact form
-            document.getElementById('contact-form').addEventListener('submit', handleContactForm);
-
-            // Modal close buttons
-            document.querySelectorAll('.close').forEach(closeBtn => {
-                closeBtn.addEventListener('click', function() {
-                    this.closest('.modal').style.display = 'none';
-                });
-            });
-
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            });
-
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Show car details in modal
-        function showCarDetails(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (!car) return;
-
-            const modalContent = document.getElementById('modal-content');
-            modalContent.innerHTML = `
-                <div class="mb-6">
-                    <img src="${car.image}" alt="${car.name}" class="w-full h-64 object-cover rounded-lg mb-4">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-2">${car.name}</h2>
-                    <div class="text-2xl font-bold text-blue-600 mb-4">${car.price}</div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Spesifikasi</h3>
-                        <div class="space-y-2 text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Tahun:</span>
-                                <span class="font-medium">${car.year}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Kilometer:</span>
-                                <span class="font-medium">${car.km} km</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Transmisi:</span>
-                                <span class="font-medium">${car.transmission}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Bahan Bakar:</span>
-                                <span class="font-medium">${car.fuel}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Fitur</h3>
-                        <div class="flex flex-wrap gap-2">
-                            ${car.features.map(feature => `
-                                <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">${feature}</span>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Deskripsi</h3>
-                    <p class="text-gray-600">${car.description}</p>
-                </div>
-                
-                <div class="flex gap-4">
-                    <button onclick="contactForCar('${car.name}')" class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-                        Hubungi Sales
-                    </button>
-                    <button onclick="requestTestDrive('${car.name}')" class="flex-1 border-2 border-blue-600 text-blue-600 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition duration-300">
-                        Test Drive
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('car-modal').style.display = 'block';
-        }
-
-        // Contact for specific car
-        function contactForCar(carName) {
-            const message = `Halo, saya tertarik dengan mobil ${carName}. Bisa minta informasi lebih lanjut?`;
-            const whatsappUrl = `https://wa.me/6285656700619?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        // Request test drive
-        function requestTestDrive(carName) {
-            const message = `Halo, saya ingin mengajukan test drive untuk mobil ${carName}. Kapan bisa diatur?`;
-            const whatsappUrl = `https://wa.me/6285656700619?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        // Handle contact form submission
-        function handleContactForm(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            // Add timestamp
-            data.timestamp = new Date().toLocaleString('id-ID');
-            
-            // Send to Google Sheets (you'll need to replace this URL with your actual Google Apps Script URL)
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzvK47ZU4zXnnHDWHveqXY2eeaKmuLylrvy90FZ0J_bHl7qSmUlkYHqP-dULavC4ezLrg/exec';
-            
-            // For demo purposes, we'll just show success message
-            // In real implementation, you would send data to Google Sheets
-            console.log('Data yang akan dikirim:', data);
-            
-            // Show success message
-            document.getElementById('success-modal').style.display = 'block';
-            
-            // Reset form
-            e.target.reset();
-            
-            // In real implementation, uncomment this:
-            
-            fetch(scriptURL, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                document.getElementById('success-modal').style.display = 'block';
-                e.target.reset();
-            })
-            .catch(error => {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
-                console.error('Error:', error);
-            });
-            
-        }
-
-        // Animate counters
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stats-counter');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = parseInt(counter.dataset.target);
-                        let current = 0;
-                        const increment = target / 100;
-                        
-                        const updateCounter = () => {
-                            if (current < target) {
-                                current += increment;
-                                counter.textContent = Math.ceil(current);
-                                requestAnimationFrame(updateCounter);
-                            } else {
-                                counter.textContent = target;
-                            }
-                        };
-                        
-                        updateCounter();
-                        observer.unobserve(counter);
-                    }
-                });
-            });
-            
-            counters.forEach(counter => observer.observe(counter));
-        }
-
-        // Utility functions
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984730ef53f55d17',t:'MTc1ODc2ODM4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+      }
+    }
+    
+    function spawnEnemy() {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 400 + Math.random() * 200;
+      
+      const difficulty = 1 + gameTime / 60;
+      const type = Math.random();
+      
+      let enemy;
+      if (type < 0.6) {
+        // Basic zombie
+        enemy = {
+          x: player.x + Math.cos(angle) * dist,
+          y: player.y + Math.sin(angle) * dist,
+          size: 12,
+          speed: 30 + Math.random() * 20,
+          health: 20 * difficulty,
+          maxHealth: 20 * difficulty,
+          damage: 10,
+          color: '#44aa44',
+          xp: 1,
+          type: 'zombie'
+        };
+      } else if (type < 0.85) {
+        // Fast bat
+        enemy = {
+          x: player.x + Math.cos(angle) * dist,
+          y: player.y + Math.sin(angle) * dist,
+          size: 8,
+          speed: 80 + Math.random() * 30,
+          health: 10 * difficulty,
+          maxHealth: 10 * difficulty,
+          damage: 5,
+          color: '#8844aa',
+          xp: 2,
+          type: 'bat'
+        };
+      } else {
+        // Tank skeleton
+        enemy = {
+          x: player.x + Math.cos(angle) * dist,
+          y: player.y + Math.sin(angle) * dist,
+          size: 16,
+          speed: 20 + Math.random() * 10,
+          health: 50 * difficulty,
+          maxHealth: 50 * difficulty,
+          damage: 20,
+          color: '#ccccaa',
+          xp: 5,
+          type: 'skeleton'
+        };
+      }
+      
+      enemies.push(enemy);
+    }
+   
